@@ -1,0 +1,9 @@
+img{
+    height: 300px;
+    width: 500px;
+}
+
+.card{
+    display: flex;
+   align-items: center;
+}
