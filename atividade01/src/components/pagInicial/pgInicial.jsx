@@ -6,7 +6,7 @@ import Logo from '../../img/logo.png';
 
 import Questao01 from '../questao01/index';
 import Questao02 from '../questao02/index';
-import Questao03 from '../questao03/filho';
+import Questao03 from '../questao03/Pai';
 
 class pgInicial extends React.Component {
     render() {
@@ -44,7 +44,7 @@ class pgInicial extends React.Component {
                     <h4 className="card-header">Questão 03</h4>
                         <div className="card">
                             <div className="card-body">
-                                <Questao03 id='q3' nome='Marcus Vinícius' curso="Desing Digital" cidade="Choró" />
+                                <Questao03 id='q3'/>
                             </div>
                         </div>
                     </div>
