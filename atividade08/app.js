@@ -3,7 +3,9 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var DisciplinaRoute = require('./routes/DisciplinaRoute');
+require('./db/mongoDBConn');
+
+var disciplinas = require('./routes/DisciplinaRoute');
 
 var app = express();
 
@@ -18,6 +20,6 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.use('/disciplinas', DisciplinaRoute);
+app.use('/disciplinas', disciplinas)
 
 module.exports = app;
