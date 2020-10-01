@@ -13,7 +13,7 @@ export default class List extends Component {
     }
 
     componentDidMount() {
-        Axios.get("http://localhost:3001/disciplinas")
+        Axios.get("http://localhost:3002/disciplinas/list")
             .then(
                 (res) => {
                     this.setState({ disciplinas: res.data });

@@ -9,7 +9,7 @@ export default class TableRow extends Component {
     }
 
     apagar() {
-        axios.delete('http://localhost:3001/disciplinas/' + this.props.disciplina._id)
+        axios.delete('http://localhost:3002/disciplinas/delete/' + this.props.disciplina._id)
             .then(
                 (res) => {
                     console.log('Disciplina deletada.')
