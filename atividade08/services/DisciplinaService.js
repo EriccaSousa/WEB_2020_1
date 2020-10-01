@@ -43,7 +43,6 @@ class DisciplinaService {
             )
     }
 
-    //retorna o user deletado
     static delete(req, res) {
         DisciplinaModel.findByIdAndRemove(req.params.id).then(
             (disciplina) => {
@@ -56,7 +55,7 @@ class DisciplinaService {
                 }
             )
     }
-    //retorna um user
+
     static retrieve(req, res) {
         DisciplinaModel.findById(req.params.id)
             .then(
