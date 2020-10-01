@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import TableRow from './TableRow';
 import FirebaseContext from '../utils/FirebaseContext';
+import FirebaseService from '../service/FirebaseService';
 
 const ListPage = () => (
     <FirebaseContext.Consumer>
@@ -22,22 +23,27 @@ class List extends Component {
         this._isMounted = true;
         this.setState({ loading: true });
 
-        FirebaseService.list(this.props.firebase.getFirestore(),
+        FirebaseService.list(
+            this.props.firebase.getFirestore(),
             (disciplinas) => {
-                this._isMounted && this.setState({ disciplinas: disciplinas, loading: false })
-            });
+                if (disciplinas) {
+                    if (this._isMounted) {
+                        this.setState({ disciplinas: disciplinas, loading: false });
+                    }
+                }
+            }
+        )
     }
 
     montarTabela() {
         if (!this.state.disciplinas) return;
 
-        if (this.state.loading) return this.loadingSpinner();
-
         return this.state.disciplinas.map(
             (disc, i) => {
                 return <TableRow disciplina={disc}
                     key={i}
-                    firebase={this.props.firebase} />
+                    firebase={this.props.firebase}
+                />
             }
         )
     }

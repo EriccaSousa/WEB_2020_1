@@ -1,69 +1,72 @@
 import React, { Component } from 'react'
 import FirebaseContext from '../utils/FirebaseContext';
+import FirebaseService from '../service/FirebaseService';
 
 const EditPage = (props) => (
     <FirebaseContext.Consumer>
-        {context => <Create firebase={context} id={props.match.params.id} />}
+        {context => <Edit firebase={context} id={props.match.params.id} />}
     </FirebaseContext.Consumer>
 )
 
 class Edit extends Component {
 
     constructor(props) {
-        super(props)
+        super(props);
 
-        this.state = { nome: '', curso: '', capacidade: '' }
+        this.state = { nome: '', curso: '', capacidade: '' };
 
-        this.setNome = this.setNome.bind(this)
-        this.setCurso = this.setCurso.bind(this)
-        this.setCapacidade = this.setCapacidade.bind(this)
-        this.onSubmit = this.onSubmit.bind(this)
+        this.setNome = this.setNome.bind(this);
+        this.setCurso = this.setCurso.bind(this);
+        this.setCapacidade = this.setCapacidade.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
     }
 
     componentDidMount() {
-        this.props.firebase.getFirestore().collection('disciplinas').doc(this.props.id).get()
-            .then(
-                (doc) => {
+        FirebaseService.retrieve(
+            this.props.firebase.getFirestore(),
+            (disciplina) => {
+                if (disciplina)
                     this.setState({
-                        nome: doc.data().nome,
-                        curso: doc.data().curso,
-                        capacidade: doc.data().capacidade
+                        nome: disciplina.nome,
+                        curso: disciplina.curso,
+                        capacidade: disciplina.capacidade
                     })
-                }
-            )
-            .catch(
-                (error) => console.log(error)
-            )
+            },
+            this.props.id
+        );
     }
 
     setNome(e) {
-        this.setState({ nome: e.target.value })
+        this.setState({ nome: e.target.value });
     }
 
     setCurso(e) {
-        this.setState({ curso: e.target.value })
+        this.setState({ curso: e.target.value });
     }
 
     setCapacidade(e) {
-        this.setState({ capacidade: e.target.value })
+        this.setState({ capacidade: e.target.value });
     }
 
     onSubmit(e) {
-        e.preventDefault()
+        e.preventDefault();
 
-        this.props.firebase.getFirestore().collection('disciplnas').doc(this.props).set(
-            {
-                nome: this.state.nome,
-                curso: this.state.curso,
-                capacidade: this.state.capacidade
-            }
-        )
-            .then(
-                () => console.log('Disciplina atualizada.')
-            )
-            .catch(
-                (error) => console.log(error)
-            )
+        const disciplina = {
+            nome: this.state.nome,
+            curso: this.state.curso,
+            capacidade: this.state.capacidade
+        }
+
+        FirebaseService.edit(
+            this.props.firebase.getFirestore(),
+            (mensagem) => {
+                if (mensagem === 'ok') console.log(`Disciplna atualizada com sucesso.`);
+            },
+            disciplina,
+            this.props.id
+        );
+
+        this.setState({ nome: '', curso: '', capacidade: '' });
     }
 
     render() {
