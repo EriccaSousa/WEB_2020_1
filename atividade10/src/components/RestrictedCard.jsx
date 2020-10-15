@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Card from './Card'
 
 import { connect } from 'react-redux'
+import { signout } from '../store/actions/authActionCreator'
 
 class RestrictedCard extends Component {
     
@@ -35,8 +36,23 @@ class RestrictedCard extends Component {
     }
 }
 
+function mapStateToProps(state) {
+    return {
+        auth: state.firebaseReducer.auth,
+        authMsg: state.authReducer.authMsg,
+        verified: state.authReducer.verified
+    };
+}
 
+function mapDispatchToProps(dispatch) {
+    return {
+        signout(callback) {
+            const action = signout(callback)
+            dispatch(action)
+        }
+    }
+}
 
 export default connect(
-    
+    mapStateToProps, mapDispatchToProps
 )(RestrictedCard);

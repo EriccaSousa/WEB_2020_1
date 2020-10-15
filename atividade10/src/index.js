@@ -7,10 +7,11 @@ import App from './App';
 import { Provider } from 'react-redux';
 import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
 
+import { store, rrfProps } from './store/storeConfig'
 
 ReactDOM.render(
-  <Provider >
-    <ReactReduxFirebaseProvider >
+  <Provider store={store}>
+    <ReactReduxFirebaseProvider {...rrfProps}>
         <App />
     </ReactReduxFirebaseProvider>
   </Provider>,

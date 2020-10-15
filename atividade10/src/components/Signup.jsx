@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { signup } from '../store/actions/authActionCreator'
 import Card from './Card'
 
 class Signup extends Component {
@@ -92,8 +93,22 @@ class Signup extends Component {
     }
 }
 
+function mapStateToProps(state) {
+    return {
+        authMsg: state.authReducer.authMsg
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        signup(login, password, callback) {
+            const action = signup(login, password, callback)
+            dispatch(action)
+        }
+    }
+}
 
 export default connect(
-    
+    mapStateToProps, mapDispatchToProps
 )(Signup);
 
